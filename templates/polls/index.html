@@ -15,7 +15,14 @@
         <p>NO polls are available.</p>
     {% endif %}
     <h1>{{ question.question_text }}</h1>
-    { % if error_message %}<p>
-
+    { % if error_message %} <p><strong>{{ error_message }}</strong></p>{% endif%}
+    <from action="{% url 'pools:vote' question.id%}" methon="post">{% csrf_token %}
+    {% for choice in question.choice_set.all %}
+        <input type="radio" name="choice" id="choice{{forloop.counter}}" value="{{choice.id}}">
+        <laber for="choice{{ forloop.counter}}">{{ choice.choice_text}} </laber>
+        <br>
+        {% endfor %}
+        <input type="submit" value="Vote">
+    </from>
 </body>
 </html>
